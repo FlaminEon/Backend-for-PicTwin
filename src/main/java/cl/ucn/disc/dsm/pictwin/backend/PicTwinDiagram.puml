@@ -1,0 +1,79 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+interface PicTwin{
+    +create(user:User, password:String): User
+    +retrieveUser(id:Long): User
+    +createTwin(Pic:myPic, user:User): Twin
+}
+
+entity User{
+    -id: Long
+    -email: String
+    -password: String
+    -strikes: Integer
+
+    +User(...)
+    +getId(): Long
+    +getEmail(): String
+    +getPassword(): String
+    +getStrikes(): Integer
+    +incrementStrikes(): Integer
+    +getState(): State
+    +getTwins(): List<Twin>
+}
+
+entity Twin{
+    -id: Long
+    -dislike: boolean
+
+    +Twin(...)
+    +getId(): Long
+    +getDislike(): boolean
+    +setDislike(): void
+    +getMy(): Pic
+    +getYours(): Pic
+}
+
+entity Pic{
+    -id: Long
+    -timestamp: ZonedDateTime
+    -dislikes: Integer
+    -latitude: Double
+    -longitude: Double
+    -error: Double
+    -views: Integer
+    -name: String
+    -picture: byte[]
+
+    +Pic(...)
+    +getId(): Long
+    +getTimestamp(): ZonedDateTime
+    +getDislikes(): Integer
+    +incrementDislikes(): Integer
+    +getLatitude(): Double
+    +getLongitude(): Double
+    +getError(): Double
+    +getViews(): Integer
+    +incrementViews(): Integer
+    +getName(): String
+    +getPicture(): byte[]
+}
+
+enum State{
+    ACTIVE
+    BANNED
+}
+
+PicTwin..>Pic
+PicTwin..>Twin
+PicTwin..>User
+
+User-->"*"Twin: has
+User-->"1"State: has
+
+Twin-->"1"Pic: my
+Twin-->"1"Pic: yours
+
+
+@enduml
