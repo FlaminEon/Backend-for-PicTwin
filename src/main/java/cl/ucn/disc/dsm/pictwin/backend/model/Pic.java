@@ -29,7 +29,7 @@ import java.time.ZonedDateTime;
 /**
  * The Pic class
  *
- * @author Tomas Venegas
+ * @author Cross
  */
 @Entity
 public final class Pic {

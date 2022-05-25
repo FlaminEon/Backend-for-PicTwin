@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Bean;
 /**
  * The backend main class
  *
- * @author Tomas Venegas
+ * @author Cross
  */
 @SpringBootApplication
 @Slf4j

@@ -15,30 +15,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cl.ucn.disc.dsm.pictwin.backend;
+package cl.ucn.disc.dsm.pictwin.backend.model;
 
-import cl.ucn.disc.dsm.pictwin.backend.model.Pic;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The Controller
+ * The User of the application
  *
  * @author Cross
  */
-@RestController
-@Slf4j
-public class PictwinController {
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public final class User {
 
-    @Autowired
-    private PicRepository repository;
+    /**
+     * The Id
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter
+    private Long id;
 
-    @GetMapping("/pics")
-    public List<Pic> index(){
-        return this.repository.findAll();
-    }
+    /**
+     * The Twins
+     */
+    @OneToMany(cascade = CascadeType.ALL)
+    @Builder.Default
+    @Getter
+    private List<Twin> twins = new ArrayList<>();
 }

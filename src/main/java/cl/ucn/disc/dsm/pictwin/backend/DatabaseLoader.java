@@ -17,28 +17,47 @@
 
 package cl.ucn.disc.dsm.pictwin.backend;
 
-import cl.ucn.disc.dsm.pictwin.backend.model.Pic;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 /**
- * The Controller
+ * The Database loader
  *
  * @author Cross
  */
-@RestController
 @Slf4j
-public class PictwinController {
+@Component
+public class DatabaseLoader implements CommandLineRunner {
 
+    /**
+     * The User repository
+     */
+    UserRepository userRepository;
+
+    /**
+     * The Twin repository
+     */
+    TwinRepository twinRepository;
+
+    /**
+     * The Pic repository
+     */
+    PicRepository picRepository;
+
+    /**
+     * The constructor
+     *
+     * @param userRepository a repository
+     * @param twinRepository another repository
+     * @param picRepository yet another repository
+     */
     @Autowired
-    private PicRepository repository;
-
-    @GetMapping("/pics")
-    public List<Pic> index(){
-        return this.repository.findAll();
+    public DatabaseLoader(UserRepository userRepository, TwinRepository twinRepository, PicRepository picRepository){
+        this.userRepository = userRepository;
+        this.twinRepository = twinRepository;
+        this.picRepository = picRepository;
     }
 }
+
