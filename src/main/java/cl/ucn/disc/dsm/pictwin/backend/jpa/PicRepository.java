@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cl.ucn.disc.dsm.pictwin.backend;
+package cl.ucn.disc.dsm.pictwin.backend.jpa;
 
 import cl.ucn.disc.dsm.pictwin.backend.model.Pic;
 import org.springframework.data.repository.ListCrudRepository;

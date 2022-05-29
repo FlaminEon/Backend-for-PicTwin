@@ -50,7 +50,7 @@ public final class Twin {
     /**
      * Pic tagged as "my"
      */
-    @ManyToOne(Optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @Getter
     private Pic my;
 

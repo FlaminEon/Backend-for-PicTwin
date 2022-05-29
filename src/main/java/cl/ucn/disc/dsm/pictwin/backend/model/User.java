@@ -46,6 +46,24 @@ public final class User {
     private Long id;
 
     /**
+     * The user's email
+     */
+    @Getter
+    private String email;
+
+    /**
+     * The user's amount of strikes
+     */
+    @Getter
+    private Integer strikes;
+
+    /**
+     * The user's hashed password
+     */
+    @Getter
+    private String password;
+
+    /**
      * The Twins
      */
     @OneToMany(cascade = CascadeType.ALL)

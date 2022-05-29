@@ -15,17 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cl.ucn.disc.dsm.pictwin.backend;
+package cl.ucn.disc.dsm.pictwin.backend.jpa;
 
-import cl.ucn.disc.dsm.pictwin.backend.model.User;
+import cl.ucn.disc.dsm.pictwin.backend.model.Twin;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * The User repository
+ * The Twin repository
  *
  * @author Cross
  */
 @Repository
-public interface UserRepository extends ListCrudRepository<User, Long> {
+public interface TwinRepository extends ListCrudRepository<Twin, Long> {
 }

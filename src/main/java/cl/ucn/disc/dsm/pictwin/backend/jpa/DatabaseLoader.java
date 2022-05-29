@@ -15,8 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cl.ucn.disc.dsm.pictwin.backend;
+package cl.ucn.disc.dsm.pictwin.backend.jpa;
 
+import cl.ucn.disc.dsm.pictwin.backend.model.Pic;
+import cl.ucn.disc.dsm.pictwin.backend.model.Twin;
+import cl.ucn.disc.dsm.pictwin.backend.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -59,5 +62,57 @@ public class DatabaseLoader implements CommandLineRunner {
         this.twinRepository = twinRepository;
         this.picRepository = picRepository;
     }
+    /**
+     * Callback used to run the bean.
+     *
+     * @param args incoming main method arguments
+     * @throws Exception an error
+     */
+    @Override
+    public void run(String... args) throws Exception {
+        log.info("Database DataLoader: Starting seeder ..");
+
+        if (this.userRepository.count() == 0){
+            log.warn("No data found in database");
+        }
+
+        User user = User.builder()
+                .email("ihikari@cnu.com")
+                .strikes(0)
+                .password("ihikari123")
+                .build();
+        log.debug("Saving user:{}", user);
+        this.userRepository.save(user);
+
+        Pic p1 = Pic.builder()
+                .name("Pic 1")
+                .views(0)
+                .dislikes(0)
+                .build();
+        log.debug("Saving Pic: {}", p1);
+        this.picRepository.save(p1);
+
+        Pic p2 = Pic.builder()
+                .name("Pic 2")
+                .views(0)
+                .dislikes(0)
+                .build();
+        log.debug("Saving Pic: {}", p2);
+        this.picRepository.save(p2);
+
+        Twin twin = Twin.builder()
+                .my(p1)
+                .yours(p2)
+                .build();
+        log.debug("Saving Twin: {}", twin);
+        this.twinRepository.save(twin);
+
+        user.add(twin);
+        log.debug("Re-saving user: {}", user);
+        this.userRepository.save(user);
+
+        log.info("Database Data Loader: Done.");
+    }
+
 }
 

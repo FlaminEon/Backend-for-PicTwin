@@ -1,79 +1,131 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-interface PicTwin{
-    +create(user:User, password:String): User
-    +retrieveUser(id:Long): User
-    +createTwin(Pic:myPic, user:User): Twin
+package cl.ucn.disc.dsm.pictwin.backend.model {
+    class User{
+        -id: Long
+        -email: String
+        -password: String
+        -strikes: Integer
+
+        +User(...)
+        +getId(): Long
+        +getEmail(): String
+        +getPassword(): String
+        +getStrikes(): Integer
+        +incrementStrikes(): Integer
+        +getState(): State
+        +getTwins(): List<Twin>
+    }
+
+    class Twin{
+        -id: Long
+        -dislike: boolean
+
+        +Twin(...)
+        +getId(): Long
+        +getDislike(): boolean
+        +setDislike(): void
+        +getMy(): Pic
+        +getYours(): Pic
+    }
+
+    class Pic{
+        -id: Long
+        -timestamp: ZonedDateTime
+        -dislikes: Integer
+        -latitude: Double
+        -longitude: Double
+        -error: Double
+        -views: Integer
+        -name: String
+        -picture: byte[]
+
+        +Pic(...)
+        +getId(): Long
+        +getTimestamp(): ZonedDateTime
+        +getDislikes(): Integer
+        +incrementDislikes(): Integer
+        +getLatitude(): Double
+        +getLongitude(): Double
+        +getError(): Double
+        +getViews(): Integer
+        +incrementViews(): Integer
+        +getName(): String
+        +getPicture(): byte[]
+        +getOwner(): User
+    }
+
+    enum State{
+        ACTIVE
+        BANNED
+    }
 }
 
-entity User{
-    -id: Long
-    -email: String
-    -password: String
-    -strikes: Integer
+package org.springframework.data.repository {
+    interface ListCrudRepository<T, ID>{}
 
-    +User(...)
-    +getId(): Long
-    +getEmail(): String
-    +getPassword(): String
-    +getStrikes(): Integer
-    +incrementStrikes(): Integer
-    +getState(): State
-    +getTwins(): List<Twin>
+    interface CrudRepository<T, ID>{}
 }
 
-entity Twin{
-    -id: Long
-    -dislike: boolean
+package cl.ucn.disc.dsm.pictwin.backend.services {
+    interface PicTwin{
+        +create(user:User, password:String): User
+        +authenticate(email:String, password:String): User
+        +createTwin(pic:Pic, idUser:Long): Twin
+        dislike(idTwin:Long, idUser:Long): void
+    }
 
-    +Twin(...)
-    +getId(): Long
-    +getDislike(): boolean
-    +setDislike(): void
-    +getMy(): Pic
-    +getYours(): Pic
+    class PicTwinImpl {
+        {static}-PASSWORD_ENCODER: PasswordEncoder
+    }
 }
 
-entity Pic{
-    -id: Long
-    -timestamp: ZonedDateTime
-    -dislikes: Integer
-    -latitude: Double
-    -longitude: Double
-    -error: Double
-    -views: Integer
-    -name: String
-    -picture: byte[]
-
-    +Pic(...)
-    +getId(): Long
-    +getTimestamp(): ZonedDateTime
-    +getDislikes(): Integer
-    +incrementDislikes(): Integer
-    +getLatitude(): Double
-    +getLongitude(): Double
-    +getError(): Double
-    +getViews(): Integer
-    +incrementViews(): Integer
-    +getName(): String
-    +getPicture(): byte[]
+package cl.ucn.dsm.pictwin.backend {
+    class PicTwinRestController {
+        +PicTwinRestController(picTwin: PicTwin)
+        +index(): List<User>
+    }
 }
 
-enum State{
-    ACTIVE
-    BANNED
+package cl.ucn.disc.dsm.pictwin.backend.jpa {
+    class DatabaseLoader {
+        +DatabaseLoader(UserRepository, TwinRepository, PicRepository)
+        +run(String..): void
+    }
+
+    interface UserRepository<User, Long> {}
+    interface PicRepository<Pic, Long> {}
+    interface TwinRepository<Twin, Long> {}
 }
 
-PicTwin..>Pic
-PicTwin..>Twin
-PicTwin..>User
+User --> "1" State : -state: State
+User --> "*" Twin : -twins: List<Twins>
 
-User-->"*"Twin: has
-User-->"1"State: has
+Twin --> "1" Pic : -yours: Pic
+Twin --> "1" Pic : -my: Pic
 
-Twin-->"1"Pic: my
-Twin-->"1"Pic: yours
+Pic --> User : -owner: User
 
+ListCrudRepository -|> CrudRepository
+
+DatabaseLoader --> "1" UserRepository : -userRepository
+DatabaseLoader --> "1" PicRepository : -picRepository
+DatabaseLoader --> "1" TwinRepository : -twinRepository
+
+UserRepository -|> ListCrudRepository
+PicRepository -|> ListCrudRepository
+TwinRepository -|> ListCrudRepository
+
+PicTwinRestController --> "1" PicTwin : -picTwin: PicTwin
+
+PicTwinImpl --> "1" UserRepository : userRepo
+PicTwinImpl --> "1" PicRepository : picRepo
+PicTwinImpl --> "1" TwinRepository : twinRepo
+PicTwinImpl -|> PicTwin
+
+PicTwin ..> User : <<use>>
+PicTwin ..> Pic : <<use>>
+PicTwin ..> Twin : <<use>>
 
 @enduml

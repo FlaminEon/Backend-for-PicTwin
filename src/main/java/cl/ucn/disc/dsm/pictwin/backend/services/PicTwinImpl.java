@@ -15,31 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cl.ucn.disc.dsm.pictwin.backend;
+package cl.ucn.disc.dsm.pictwin.backend.services;
 
-import cl.ucn.disc.dsm.pictwin.backend.jpa.PicRepository;
-import cl.ucn.disc.dsm.pictwin.backend.model.Pic;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.List;
-
-/**
- * The Controller
- *
- * @author Cross
- */
-@RestController
-@Slf4j
-public class PictwinController {
-
-    @Autowired
-    private PicRepository repository;
-
-    @GetMapping("/pics")
-    public List<Pic> index(){
-        return this.repository.findAll();
-    }
+public class PicTwinImpl {
+    /**
+     * The Hasher
+     */
+    private final static PasswordEncoder PASSWORD_ENCODER = new Argon2PasswordEncoder();
 }
