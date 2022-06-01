@@ -1,5 +1,6 @@
 @startuml
 'https://plantuml.com/sequence-diagram
+left to right direction
 
 package cl.ucn.disc.dsm.pictwin.backend.model {
     class User{
@@ -81,14 +82,13 @@ package cl.ucn.disc.dsm.pictwin.backend.services {
     }
 }
 
-package cl.ucn.dsm.pictwin.backend {
-    class PicTwinRestController {
-        +PicTwinRestController(picTwin: PicTwin)
-        +index(): List<User>
+package cl.ucn.disc.dsm.pictwin.backend {
+    class Utils {
+        +printObject(objectName: String, o: Object): void
     }
 }
 
-package cl.ucn.disc.dsm.pictwin.backend.jpa {
+package cl.ucn.disc.dsm.pictwin.backend.dao {
     class DatabaseLoader {
         +DatabaseLoader(UserRepository, TwinRepository, PicRepository)
         +run(String..): void
@@ -97,6 +97,17 @@ package cl.ucn.disc.dsm.pictwin.backend.jpa {
     interface UserRepository<User, Long> {}
     interface PicRepository<Pic, Long> {}
     interface TwinRepository<Twin, Long> {}
+}
+
+package cl.ucn.disc.dsm.pictwin.backend.web {
+    class PicTwinRestController {
+            +PicTwinRestController(picTwin: PicTwin)
+            +index(): List<User>
+    }
+
+    class BackendApplication {
+        {static}+main(args[]: String): void
+    }
 }
 
 User --> "1" State : -state: State
@@ -109,9 +120,8 @@ Pic --> User : -owner: User
 
 ListCrudRepository -|> CrudRepository
 
-DatabaseLoader --> "1" UserRepository : -userRepository
-DatabaseLoader --> "1" PicRepository : -picRepository
-DatabaseLoader --> "1" TwinRepository : -twinRepository
+DatabaseLoader --> PicTwin : -picTwin: PicTwin
+DatabaseLoader --> Utils : <<use>>
 
 UserRepository -|> ListCrudRepository
 PicRepository -|> ListCrudRepository
@@ -127,5 +137,7 @@ PicTwinImpl -|> PicTwin
 PicTwin ..> User : <<use>>
 PicTwin ..> Pic : <<use>>
 PicTwin ..> Twin : <<use>>
+
+BackendApplication ..> PicTwinRestController : <<use>>
 
 @enduml
