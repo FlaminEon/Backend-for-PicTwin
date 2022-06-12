@@ -74,7 +74,8 @@ package cl.ucn.disc.dsm.pictwin.backend.services {
         +create(user:User, password:String): User
         +authenticate(email:String, password:String): User
         +createTwin(pic:Pic, idUser:Long): Twin
-        dislike(idTwin:Long, idUser:Long): void
+        +dislike(idTwin:Long, idUser:Long): void
+        +getUserSize(): Long
     }
 
     class PicTwinImpl {
@@ -102,7 +103,10 @@ package cl.ucn.disc.dsm.pictwin.backend.dao {
 package cl.ucn.disc.dsm.pictwin.backend.web {
     class PicTwinRestController {
             +PicTwinRestController(picTwin: PicTwin)
-            +index(): List<User>
+            +create(user: User, password: String): User
+            +authenticate(email:String, password: String): User
+            +createTwin(pic: Pic, idUser: Long): Twin
+            +dislike(idTwin: Long, idUser: Long): void
     }
 
     class BackendApplication {
@@ -132,7 +136,7 @@ PicTwinRestController --> "1" PicTwin : -picTwin: PicTwin
 PicTwinImpl --> "1" UserRepository : userRepo
 PicTwinImpl --> "1" PicRepository : picRepo
 PicTwinImpl --> "1" TwinRepository : twinRepo
-PicTwinImpl -|> PicTwin
+PicTwinImpl .|> PicTwin
 
 PicTwin ..> User : <<use>>
 PicTwin ..> Pic : <<use>>

@@ -17,6 +17,7 @@
 
 package cl.ucn.disc.dsm.pictwin.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,7 @@ import lombok.*;
  * @author Cross
  */
 @Entity
+@Table(name = "twins")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -60,4 +62,12 @@ public final class Twin {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @Getter
     private Pic yours;
+
+    /**
+     * The owner of the twin
+     */
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @Getter
+    @JsonBackReference
+    private User owner;
 }

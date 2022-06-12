@@ -15,26 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cl.ucn.disc.dsm.pictwin.backend;
+package cl.ucn.disc.dsm.pictwin.backend.dao;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import cl.ucn.disc.dsm.pictwin.backend.model.User;
+import lombok.NonNull;
+import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 /**
- * The backend main class
+ * The User repository
  *
  * @author Cross
  */
-@SpringBootApplication
-@Slf4j
-public class BackendApplication {
-
+@Repository
+public interface UserRepository extends ListCrudRepository<User, Long> {
     /**
-     * Main
-     * @param args to use
+     * Return the User with a specified email
+     * @param email to use
+     * @return the Optional of user
      */
-    public static void main(String[] args) {
-        SpringApplication.run(BackendApplication.class, args);
-    }
+    Optional<User> findOneByEmail(@NonNull String email);
 }

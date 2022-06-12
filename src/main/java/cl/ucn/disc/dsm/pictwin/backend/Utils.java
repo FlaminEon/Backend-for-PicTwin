@@ -15,17 +15,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cl.ucn.disc.dsm.pictwin.backend.jpa;
+package cl.ucn.disc.dsm.pictwin.backend;
 
-import cl.ucn.disc.dsm.pictwin.backend.model.User;
-import org.springframework.data.repository.ListCrudRepository;
-import org.springframework.stereotype.Repository;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.builder.RecursiveToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
- * The User repository
+ * The Utils
  *
  * @author Cross
  */
-@Repository
-public interface UserRepository extends ListCrudRepository<User, Long> {
+@Slf4j
+public final class Utils {
+
+    /**
+     * Print in log the internal of one object
+     *
+     * @param objectName to print
+     * @param o to print
+     */
+    public static void printObject(@NonNull String objectName, Object o){
+        if (o != null){
+            log.debug("{}: {}", objectName, ToStringBuilder.reflectionToString(o, RecursiveToStringStyle.MULTI_LINE_STYLE));
+        } else {
+            log.debug("{}: {}", objectName, null);
+        }
+    }
 }

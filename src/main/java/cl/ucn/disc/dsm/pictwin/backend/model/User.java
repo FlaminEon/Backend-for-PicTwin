@@ -17,11 +17,10 @@
 
 package cl.ucn.disc.dsm.pictwin.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +31,7 @@ import java.util.List;
  * @author Cross
  */
 @Entity
+@Table(name = "users")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -49,6 +49,9 @@ public final class User {
      * The user's email
      */
     @Getter
+    @NonNull
+    @NotBlank
+    @Column(unique = true)
     private String email;
 
     /**
@@ -61,13 +64,43 @@ public final class User {
      * The user's hashed password
      */
     @Getter
+    @Setter
     private String password;
 
     /**
      * The Twins
      */
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     @Builder.Default
     @Getter
+    @JsonManagedReference
     private List<Twin> twins = new ArrayList<>();
+
+    /**
+     * The State
+     */
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    @Getter
+    @Setter
+    private State state = State.ACTIVE;
+
+    /**
+     *Increment the amount of strikes
+     *
+     * @return the number of strikes
+     */
+    public Integer incrementStrikes(){
+        this.strikes++;
+        return this.strikes;
+    }
+
+    /**
+     * Insert a twin into the list
+     *
+     * @param twin to add
+     */
+    public void add(final Twin twin){
+        this.twins.add(twin);
+    }
 }

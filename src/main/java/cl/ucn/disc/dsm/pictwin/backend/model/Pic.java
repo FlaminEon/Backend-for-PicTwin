@@ -17,14 +17,9 @@
 
 package cl.ucn.disc.dsm.pictwin.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.*;
 import org.glassfish.jaxb.core.v2.TODO;
 
 import java.time.ZonedDateTime;
@@ -35,6 +30,7 @@ import java.time.ZonedDateTime;
  * @author Cross
  */
 @Entity
+@Table(name = "pics")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -52,13 +48,15 @@ public final class Pic {
      * The moment (timestamp) the Pic was saved
      */
     @Getter
+    @Builder.Default
     private ZonedDateTime timestamp = ZonedDateTime.now();
 
     /**
      * The amount of dislikes a Pic has
      */
     @Getter
-    private Integer dislikes;
+    @Builder.Default
+    private Integer dislikes = 0;
 
     /**
      * The geographical latitude of the Pic
@@ -82,7 +80,8 @@ public final class Pic {
      * The amount of views a Pic has
      */
     @Getter
-    private Integer views;
+    @Builder.Default
+    private Integer views = 0;
 
     /**
      * The name of the Pic
@@ -96,5 +95,33 @@ public final class Pic {
     @Getter
     private byte[] picture;
 
+    /**
+     * The owner of the pic
+     */
+    @Getter
+    @Setter
+    @ManyToOne(optional = false)
+    @JsonBackReference
+    private User owner;
+
+    /**
+     * Increment the amount of dislikes
+     *
+     * @return the amount of dislikes
+     */
+    public Integer incrementDislikes(){
+        this.dislikes++;
+        return this.dislikes;
+    }
+
+    /**
+     * Increment the amount of views
+     *
+     * @return the amount of views
+     */
+    public Integer incrementViews(){
+        this.views++;
+        return this.views;
+    }
 }
 
