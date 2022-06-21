@@ -136,7 +136,7 @@ public class PicTwinImpl implements PicTwin {
      */
     @Override
     @Transactional
-    public Twin createTwin(@NonNull Pic pic, @NonNull Long idUser){
+    public Twin createTwin(@NonNull Pic pic, @NonNull Long idUser) {
 
         //The user
         User owner = this.userRepository.findById(idUser).orElseThrow();
