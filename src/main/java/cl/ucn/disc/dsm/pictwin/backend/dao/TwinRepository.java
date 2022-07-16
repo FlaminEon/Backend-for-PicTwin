@@ -22,10 +22,9 @@ import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * The Twin repository
+ * The Twin repository.
  *
- * @author Cross
+ * @author Cross.
  */
 @Repository
-public interface TwinRepository extends ListCrudRepository<Twin, Long> {
-}
+public interface TwinRepository extends ListCrudRepository<Twin, Long> { }
