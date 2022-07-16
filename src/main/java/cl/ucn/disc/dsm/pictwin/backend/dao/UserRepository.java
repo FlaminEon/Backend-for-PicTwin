@@ -18,23 +18,24 @@
 package cl.ucn.disc.dsm.pictwin.backend.dao;
 
 import cl.ucn.disc.dsm.pictwin.backend.model.User;
+import java.util.Optional;
 import lombok.NonNull;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 /**
- * The User repository
+ * The User repository.
  *
- * @author Cross
+ * @author Cross.
  */
 @Repository
 public interface UserRepository extends ListCrudRepository<User, Long> {
     /**
-     * Return the User with a specified email
-     * @param email to use
-     * @return the Optional of user
+     * Return the User with a specified email.
+     *
+     * @param email to use.
+     *
+     * @return the Optional of user.
      */
     Optional<User> findOneByEmail(@NonNull String email);
 }
