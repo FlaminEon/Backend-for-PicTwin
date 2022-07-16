@@ -18,16 +18,23 @@
 package cl.ucn.disc.dsm.pictwin.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
-import lombok.*;
-import org.glassfish.jaxb.core.v2.TODO;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.ZonedDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
- * The Pic class
+ * The Pic class.
  *
- * @author Cross
+ * @author Cross.
  */
 @Entity
 @Table(name = "pics")
@@ -37,7 +44,7 @@ import java.time.ZonedDateTime;
 public final class Pic {
 
     /**
-     * The ID of the Pic
+     * The ID of the Pic.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,58 +52,58 @@ public final class Pic {
     private Long id;
 
     /**
-     * The moment (timestamp) the Pic was saved
+     * The moment (timestamp) the Pic was saved.
      */
     @Getter
     @Builder.Default
     private ZonedDateTime timestamp = ZonedDateTime.now();
 
     /**
-     * The amount of dislikes a Pic has
+     * The amount of dislikes a Pic has.
      */
     @Getter
     @Builder.Default
     private Integer dislikes = 0;
 
     /**
-     * The geographical latitude of the Pic
+     * The geographical latitude of the Pic.
      */
     @Getter
     private Double latitude;
 
     /**
-     * The geographical longitude of the Pic
+     * The geographical longitude of the Pic.
      */
     @Getter
     private Double longitude;
 
     /**
-     * The GPS' error value when the Pic was saved
+     * The GPS' error value when the Pic was saved.
      */
     @Getter
     private Double error;
 
     /**
-     * The amount of views a Pic has
+     * The amount of views a Pic has.
      */
     @Getter
     @Builder.Default
     private Integer views = 0;
 
     /**
-     * The name of the Pic
+     * The name of the Pic.
      */
     @Getter
     private String name;
 
     /**
-     * The stored picture in Bytes
+     * The stored picture in Bytes.
      */
     @Getter
     private byte[] picture;
 
     /**
-     * The owner of the pic
+     * The owner of the pic.
      */
     @Getter
     @Setter
@@ -105,23 +112,22 @@ public final class Pic {
     private User owner;
 
     /**
-     * Increment the amount of dislikes
+     * Increment the amount of dislikes.
      *
-     * @return the amount of dislikes
+     * @return the amount of dislikes.
      */
-    public Integer incrementDislikes(){
+    public Integer incrementDislikes() {
         this.dislikes++;
         return this.dislikes;
     }
 
     /**
-     * Increment the amount of views
+     * Increment the amount of views.
      *
-     * @return the amount of views
+     * @return the amount of views.
      */
-    public Integer incrementViews(){
+    public Integer incrementViews() {
         this.views++;
         return this.views;
     }
 }
-
