@@ -23,102 +23,111 @@ import cl.ucn.disc.dsm.pictwin.backend.model.Twin;
 import cl.ucn.disc.dsm.pictwin.backend.model.User;
 import cl.ucn.disc.dsm.pictwin.backend.services.PicTwin;
 import jakarta.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * The Controller
+ * The Controller.
  *
- * @author Cross
+ * @author Cross.
  */
 @RestController
 @Slf4j
 public class PictwinController {
 
     /**
-     * The PicTwin service
+     * The PicTwin service.
      */
     private final PicTwin picTwin;
 
     /**
-     * The Constructor
+     * The Constructor.
      *
-     * @param picTwin the service
+     * @param picTwin the service.
      */
     @Autowired
-    public PictwinController(PicTwin picTwin){
+    public PictwinController(PicTwin picTwin) {
         this.picTwin = picTwin;
     }
 
     /**
-     * Create a user
+     * Create a user.
      *
-     * @param user to create
-     * @param password to use
-     * @return the user
+     * @param user to create.
+     * @param password to use.
+     *
+     * @return the user.
      */
     @RequestMapping(value = {"/users", "/users/"}, method = RequestMethod.POST)
-    public User create(@Valid @RequestBody User user, @RequestParam String password){
+    public User create(@Valid @RequestBody User user, @RequestParam String password) {
 
-        // Debug
+        // Debug.
         Utils.printObject("User", user);
 
-        // Call the controller
+        // Call the controller.
         return this.picTwin.create(user, password);
     }
 
     /**
-     * Authenticate a user
+     * Authenticate a user.
      *
-     * @param email to use
-     * @param password to use
-     * @return the user
+     * @param email to use.
+     * @param password to use.
+     *
+     * @return the user.
      */
     @RequestMapping(value = {"/users", "/users/"}, method = RequestMethod.GET)
-    public User authenticate(@RequestParam String email, @RequestParam String password){
+    public User authenticate(@RequestParam String email, @RequestParam String password) {
         return this.picTwin.authenticate(email, password);
     }
 
     /**
-     * Create a twin
+     * Create a twin.
      *
-     * @param pic to use
-     * @param idUser to use
-     * @return the twin
+     * @param pic to use.
+     * @param idUser to use.
+     *
+     * @return the twin.
      */
     @RequestMapping(value = {"/twins", "/twins/"}, method = RequestMethod.POST)
-    public Twin createTwin(@Valid @RequestBody Pic pic, @RequestParam Long idUser){
+    public Twin createTwin(@Valid @RequestBody Pic pic, @RequestParam Long idUser) {
         return this.picTwin.createTwin(pic, idUser);
     }
 
     /**
-     * Dislike a twin
+     * Dislike a twin.
      *
-     * @param idTwin to use
-     * @param idUser to use
+     * @param idTwin to use.
+     * @param idUser to use.
      */
     @RequestMapping(value = {"/twins", "/twins/"}, method = RequestMethod.PATCH)
-    public void dislike(@RequestParam Long idTwin, @RequestParam Long idUser){
+    public void dislike(@RequestParam Long idTwin, @RequestParam Long idUser) {
         this.picTwin.dislike(idTwin, idUser);
     }
 
     /**
-     * Show a message in {@link MethodArgumentNotValidException}
+     * Show a message in {@link MethodArgumentNotValidException}.
      *
-     * @param ex to catch
-     * @return the map of errors
+     * @param ex to catch.
+     *
+     * @return the map of errors.
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex){
-        Map<String, String > errors = new HashMap<>();
+    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
@@ -128,14 +137,15 @@ public class PictwinController {
     }
 
     /**
-     * Show a message in {@link IllegalArgumentException}
+     * Show a message in {@link IllegalArgumentException}.
      *
-     * @param ex to catch
-     * @return the message
+     * @param ex to catch.
+     *
+     * @return the message.
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
-    public String handleValidationExceptions(IllegalArgumentException ex){
+    public String handleValidationExceptions(IllegalArgumentException ex) {
         return ex.getMessage();
     }
 }
