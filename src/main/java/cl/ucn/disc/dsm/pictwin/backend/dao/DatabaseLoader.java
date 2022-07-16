@@ -28,47 +28,47 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 /**
- * The Database loader
+ * The Database loader.
  *
- * @author Cross
+ * @author Cross.
  */
 @Slf4j
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
     /**
-     * The PicTwin implementation
+     * The PicTwin implementation.
      */
     private final PicTwin picTwin;
 
     /**
-     * The constructor
+     * The constructor.
      *
-     * @param picTwin to use
+     * @param picTwin to use.
      */
-    public DatabaseLoader(@Autowired PicTwin picTwin){
+    public DatabaseLoader(@Autowired PicTwin picTwin) {
         this.picTwin = picTwin;
     }
 
     /**
      * Callback used to run the bean.
      *
-     * @param args incoming main method arguments
-     * @throws Exception an error
+     * @param args incoming main method arguments.
+     * @throws Exception an error.
      */
     @Override
     public void run(String... args) throws Exception {
         log.info("Database DataLoader: Starting seeder ..");
 
-        //check if the database is empty
-        if (this.picTwin.getUserSize() != 0){
+        // check if the database is empty.
+        if (this.picTwin.getUserSize() != 0) {
             log.info("Database already seeded, skipping!");
             return;
         }
 
         log.warn("No data found in database, seeding the database..");
 
-        //The main user
+        // The main user.
         User user = User.builder()
                 .email("ihikari@cnu.com")
                 .strikes(0)
@@ -77,7 +77,7 @@ public class DatabaseLoader implements CommandLineRunner {
         this.picTwin.create(user, "Inoue Hikari");
         Utils.printObject("User created:", user);
 
-        //Creating the first twin
+       // Creating the first twin.
        Twin twin1 = this.picTwin.createTwin(Pic.builder()
                .name("The first Pic: UCN")
                .latitude(-23.6806026)
@@ -87,7 +87,7 @@ public class DatabaseLoader implements CommandLineRunner {
                .build(), user.getId());
        Utils.printObject("twin1 created: ", twin1);
 
-        //Creating the second twin
+        // Creating the second twin.
         Twin twin2 = this.picTwin.createTwin(Pic.builder()
                 .name("The second Pic: Parque de los Eventos")
                 .latitude(-23.6281221)
@@ -97,7 +97,7 @@ public class DatabaseLoader implements CommandLineRunner {
                 .build(), user.getId());
         Utils.printObject("twin2 created: ", twin2);
 
-        //Creating the third twin
+        // Creating the third twin.
         Twin twin3 = this.picTwin.createTwin(Pic.builder()
                 .name("The third Pic: Quebrada Carrizo")
                 .latitude(-23.6977891)
@@ -107,7 +107,7 @@ public class DatabaseLoader implements CommandLineRunner {
                 .build(), user.getId());
         Utils.printObject("twin3 created: ", twin3);
 
-        //Creating the fourth twin
+        // Creating the fourth twin.
         Twin twin4 = this.picTwin.createTwin(Pic.builder()
                 .name("The fourth Pic: Balneario Juan Lopez")
                 .latitude(-23.5114433)
