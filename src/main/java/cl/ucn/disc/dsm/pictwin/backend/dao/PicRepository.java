@@ -22,10 +22,9 @@ import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * The Pic repository
+ * The Pic repository.
  *
- * @author Cross
+ * @author Cross.
  */
 @Repository
-public interface PicRepository extends ListCrudRepository<Pic, Long> {
-}
+public interface PicRepository extends ListCrudRepository<Pic, Long> { }
