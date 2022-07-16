@@ -22,17 +22,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * The backend main class
+ * The backend main class.
  *
- * @author Cross
+ * @author Cross.
  */
 @SpringBootApplication
 @Slf4j
 public class BackendApplication {
 
     /**
-     * Main
-     * @param args to use
+     * The Main.
+     *
+     * @param args to use.
      */
     public static void main(String[] args) {
         SpringApplication.run(BackendApplication.class, args);
