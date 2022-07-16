@@ -29,15 +29,13 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    // Cryptography Library
+    // Cryptography Library.
     implementation'org.springframework.security:spring-security-crypto:5.6.3'
     runtimeOnly 'org.bouncycastle:bcprov-jdk15on:1.70'
     runtimeOnly 'org.springframework:spring-jcl:5.3.20'
 
-    // Database
+    // Database.
     runtimeOnly 'com.h2database:h2'
-    //runtimeOnly 'org.xerial:sqlite-jdbc:3.36.0.3'
-    //runtimeOnly 'com.github.gwenn:sqlite-dialect:0.1.2'
 
     implementation 'org.apache.commons:commons-lang3:3.12.0'
 
