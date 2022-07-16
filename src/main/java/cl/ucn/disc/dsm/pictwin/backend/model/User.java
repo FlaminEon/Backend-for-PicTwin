@@ -18,17 +18,30 @@
 package cl.ucn.disc.dsm.pictwin.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 
 /**
- * The User of the application
+ * The User of the application.
  *
- * @author Cross
+ * @author Cross.
  */
 @Entity
 @Table(name = "users")
@@ -38,7 +51,7 @@ import java.util.List;
 public final class User {
 
     /**
-     * The Id
+     * The Id.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,7 +59,7 @@ public final class User {
     private Long id;
 
     /**
-     * The user's email
+     * The user's email.
      */
     @Getter
     @NonNull
@@ -55,20 +68,20 @@ public final class User {
     private String email;
 
     /**
-     * The user's amount of strikes
+     * The user's amount of strikes.
      */
     @Getter
     private Integer strikes;
 
     /**
-     * The user's hashed password
+     * The user's hashed password.
      */
     @Getter
     @Setter
     private String password;
 
     /**
-     * The Twins
+     * The Twins.
      */
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     @Builder.Default
@@ -77,7 +90,7 @@ public final class User {
     private List<Twin> twins = new ArrayList<>();
 
     /**
-     * The State
+     * The State.
      */
     @Enumerated(EnumType.STRING)
     @Builder.Default
@@ -86,21 +99,21 @@ public final class User {
     private State state = State.ACTIVE;
 
     /**
-     *Increment the amount of strikes
+     * Increment the amount of strikes.
      *
-     * @return the number of strikes
+     * @return the number of strikes.
      */
-    public Integer incrementStrikes(){
+    public Integer incrementStrikes() {
         this.strikes++;
         return this.strikes;
     }
 
     /**
-     * Insert a twin into the list
+     * Insert a twin into the list.
      *
-     * @param twin to add
+     * @param twin to add.
      */
-    public void add(final Twin twin){
+    public void add(final Twin twin) {
         this.twins.add(twin);
     }
 }
