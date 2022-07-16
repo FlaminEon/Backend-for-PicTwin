@@ -18,9 +18,9 @@
 package cl.ucn.disc.dsm.pictwin.backend.model;
 
 /**
- * The State Enum
+ * The State Enum.
  *
- * @author Cross
+ * @author Cross.
  */
 public enum State {
     ACTIVE,
