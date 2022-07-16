@@ -18,13 +18,23 @@
 package cl.ucn.disc.dsm.pictwin.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
- * The Twin created from two Pics
+ * The Twin created from two Pics.
  *
- * @author Cross
+ * @author Cross.
  */
 @Entity
 @Table(name = "twins")
@@ -34,7 +44,7 @@ import lombok.*;
 public final class Twin {
 
     /**
-     * The Id
+     * The Id.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,7 +52,7 @@ public final class Twin {
     private Long id;
 
     /**
-     * The dislike indicator
+     * The dislike indicator.
      */
     @Getter
     @Setter
@@ -50,21 +60,21 @@ public final class Twin {
     private Boolean dislike = Boolean.FALSE;
 
     /**
-     * Pic tagged as "my"
+     * Pic tagged as "my".
      */
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @Getter
     private Pic my;
 
     /**
-     * Pic tagged as "yours"
+     * Pic tagged as "yours".
      */
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @Getter
     private Pic yours;
 
     /**
-     * The owner of the twin
+     * The owner of the twin.
      */
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @Getter
