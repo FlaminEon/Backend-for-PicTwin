@@ -30,7 +30,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // Cryptography Library.
-    implementation'org.springframework.security:spring-security-crypto:5.6.3'
+    implementation 'org.springframework.security:spring-security-crypto:5.7.1'
     runtimeOnly 'org.bouncycastle:bcprov-jdk15on:1.70'
     runtimeOnly 'org.springframework:spring-jcl:5.3.20'
 
