@@ -22,49 +22,54 @@ import cl.ucn.disc.dsm.pictwin.backend.model.Twin;
 import cl.ucn.disc.dsm.pictwin.backend.model.User;
 
 /**
- * PicTwin's Operations
+ * PicTwin's Operations.
  *
- * @author Cross
+ * @author Cross.
  */
 public interface PicTwin {
 
     /**
-     * Create a user with a specific password
+     * Create a user with a specific password.
      *
-     * @param user to create
-     * @param password to hash
-     * @return the user created
+     * @param user to create.
+     * @param password to hash.
+     *
+     * @return the user created.
      */
     User create(User user, String password);
 
     /**
-     * Return the user with the email and password
+     * Return the user with the email and password.
      *
-     * @param email to search
-     * @param password to use
-     * @return the user
+     * @param email to search.
+     * @param password to use.
+     *
+     * @return the user.
      */
     User authenticate(String email, String password);
 
     /**
-     * Create a twin using the pic from the user
+     * Create a twin using the pic from the user.
      *
-     * @param pic to use
-     * @param idUser who created the pic
-     * @return the twin created
+     * @param pic to use.
+     * @param idUser who created the pic.
+     *
+     * @return the twin created.
      */
     Twin createTwin(Pic pic, Long idUser);
 
     /**
-     * Dislike a pic in a twin
+     * Dislike a pic in a twin.
      *
-     * @param idTwin to dislike
-     * @param idUser who disliked the twin
+     * @param idTwin to dislike.
+     * @param idUser who disliked the twin.
      */
     void dislike(Long idTwin, Long idUser);
 
     /**
-     * @return the number of users in the system
+     * Used to return the users currently in the system.
+     *
+     * @return the number of users.
      */
     Long getUserSize();
 }
